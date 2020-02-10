@@ -6,11 +6,12 @@
 #include <chrono>
 std::random_device rd;
 std::mt19937 gen(rd());
+std::array<int, 4> resource_array{ 0,1,2,3 };
 
 int main()
 {
     HarvestTiles Harvest;
-    ;
+    Harvest.drawHarvestTile();
     Harvest.printTile(Harvest.orientation(180));
     std::getchar();
     return 0;
@@ -28,7 +29,6 @@ int HarvestTiles::numOfResourcePerTile(){ //number of resource per tile
 }
 
 HarvestTiles::HarvestTiles() {
-    std::array<int, 4> resource_array{ 0,1,2,3 };
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::shuffle(resource_array.begin(), resource_array.end(), std::default_random_engine(seed)); //shuffles the array.
     
@@ -51,7 +51,6 @@ HarvestTiles::HarvestTiles() {
         int fourthResource = rand_roll(gen);
         *(harvestTile+3) = Node(Resource(resource_array[fourthResource]));
     }
-    printTile(harvestTile);
     
 }
 void HarvestTiles::printTile(Node* node){
@@ -71,6 +70,10 @@ HarvestTiles::~HarvestTiles() {
     harvestTile = nullptr;
     delete[] rotatedHarvestTile;
     rotatedHarvestTile=nullptr;
+}
+void HarvestTiles::drawHarvestTile(){
+    HarvestTiles();
+    printTile(harvestTile);
 }
 
 Node* HarvestTiles::orientation(int degrees) {
@@ -119,6 +122,9 @@ std::string Node::getResourceName(){
     }
     return resourceName;
 }
+void Node::setResource(Resource resource){
+    this->resource=resource;
+}
 
 int Node:: getResourse(){
     return resource;
@@ -127,5 +133,11 @@ int Node:: getResourse(){
 //Building function
 
 Building::Building() {
-    
+    std::uniform_int_distribution<> value_roll(1, 6);
+    std::uniform_int_distribution<> resource_roll(0, 3);
+    value= value_roll(gen);
+    int resource=resource_roll(gen);
+    top.setResource(Resource(resource));
+    bottom.setResource(Resource(resource));
 }
+

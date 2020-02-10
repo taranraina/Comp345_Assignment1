@@ -10,6 +10,7 @@ public:
 	Node() {};
     Node(Resource resource);
     int getResourse();
+    void setResource(Resource resource); 
     std::string getResourceName();
 private:
 	Resource resource;
@@ -23,6 +24,7 @@ public:
 	HarvestTiles();
     int numOfResourcePerTile();
     ~HarvestTiles();
+    void drawHarvestTile();
 	Node* orientation(int degrees);
     void printTile(Node* node);
 private:
@@ -39,6 +41,7 @@ private:
 	int value;
 	Node top;
 	Node bottom;
+    Node* building;
 
 };
 #endif
