@@ -9,7 +9,7 @@ class Node
 public:
 	Node() {};
     Node(Resource resource);
-    int getResourse();
+    int getResource();
     void setResource(Resource resource); 
     std::string getResourceName();
 private:
@@ -36,12 +36,19 @@ private:
 class Building
 {
 public:
-	Building();
+    Building();
+    ~Building();
+    Resource getBuildingResource();
+    void setBuildingResource();
+    int getBuildingValue();
+    void setBuildingNode();
+    void setBuildingValue();
+    void printBuilding();
+    void isOnTop(char userInput);
+    static Building drawBuilding();
 private:
 	int value;
-	Node top;
-	Node bottom;
-    Node* building;
-
+	Node* building;
+    bool isTop;
 };
 #endif
