@@ -12,10 +12,10 @@ int main()
     HarvestTiles Harvest;
     std::getchar();
     return 0;
-
+    
 }
 
-//Harvest Tiles function
+//number of resource per tile
 int HarvestTiles::numOfResourcePerTile(){
     int num_resources = 0;
     std::uniform_real_distribution<> dis(0.0, 1.0);
@@ -33,27 +33,27 @@ HarvestTiles::HarvestTiles() {
     std::shuffle(resource_array.begin(), resource_array.end(), std::default_random_engine(seed));
     
     for (int i = 0; i < 4; i++) {
-           std::cout << "this is resource: " <<resource_array[i] << std::endl;
-       } //just for a print
+        std::cout << "this is resource: " <<resource_array[i] << std::endl;
+    } //just for a print
     
     
-//    Node res[2][2];
+    //    Node res[2][2];
     ht = new Node[4];
     int i = 0;
-
+    
     //*(*(arr + i) + j))
     while (i < numOfResourcePerTile()) {
         *(ht+(i)) = Node(Resource(resource_array[i]));
         i++;
     }
-
+    
     for (int j = 0; j < 4; j++) {
         std::cout << " this is the ht res " <<(ht+j)->getResourceName() << std::endl;
-
+        
     }
     //PROBLEM IS HERE
     std::uniform_int_distribution<> rand_roll(0, num_resources-1);
-
+    
     if (num_resources == 3) {
         int rand = rand_roll(gen);
         *(ht+3) = Node(Resource(resource_array[rand]));
@@ -64,12 +64,12 @@ HarvestTiles::HarvestTiles() {
         int rand2 = rand_roll(gen);
         *(ht+3) = Node(Resource(resource_array[rand2]));
     }
-
+    
     //debug the ht array
     for (int j = 0; j < 4; j++) {
-         std::cout << "this is the new ht res " <<(ht+j)->getResourceName() << std::endl;
-     }
+        std::cout << "this is the new ht res " <<(ht+j)->getResourceName() << std::endl;
     }
+}
 
 HarvestTiles::~HarvestTiles() {
     delete[] ht;
@@ -77,16 +77,16 @@ HarvestTiles::~HarvestTiles() {
 }
 
 void HarvestTiles::orientation(int degrees) {
-        //in this method somehow maintain the integrity of the orientation
-    }
+    //in this method somehow maintain the integrity of the orientation
+}
 
 
 
 //Node functions
 
 Node::Node(Resource resource) {
-
-        this->resource = resource;        // this->res=Resources[resource];
+    
+    this->resource = resource;        // this->res=Resources[resource];
 }
 
 std::string Node::getResourceName(){
@@ -95,17 +95,17 @@ std::string Node::getResourceName(){
         case wood:  res="wood"; break;
         case sheep : res="sheep";  break;
         case stone : res= "stone";  break;
-           
+            
     }
     return res;
 }
 
 int Node:: getResourse(){
     return resource;
-    }
+}
 
 //Building function
 
-    Building::Building() {
-
-    }
+Building::Building() {
+    
+}
