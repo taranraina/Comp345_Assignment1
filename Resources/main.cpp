@@ -10,6 +10,8 @@ std::mt19937 gen(rd());
 int main()
 {
     HarvestTiles Harvest;
+    ;
+    Harvest.printTile(Harvest.orientation(180));
     std::getchar();
     return 0;
     
@@ -49,30 +51,55 @@ HarvestTiles::HarvestTiles() {
         int fourthResource = rand_roll(gen);
         *(harvestTile+3) = Node(Resource(resource_array[fourthResource]));
     }
-    printTile();
+    printTile(harvestTile);
     
 }
-void HarvestTiles::printTile(){
+void HarvestTiles::printTile(Node* node){
     for (int j = 0; j < 4; j++) {
         if(j<2)
-            std::cout <<(harvestTile+j)->getResourceName()+ " " ;
+            std::cout <<(node+j)->getResourceName()+ " " ;
         else if(j==2){
-            std::cout <<"\n"+(harvestTile+j)->getResourceName()+ " "  ;
+            std::cout <<"\n"+(node+j)->getResourceName()+ " "  ;
         }
         else
-            std::cout <<(harvestTile+j)->getResourceName()<<std::endl ;
+            std::cout <<(node+j)->getResourceName()<<std::endl ;
     }
 }
 
 HarvestTiles::~HarvestTiles() {
     delete[] harvestTile;
     harvestTile = nullptr;
+    delete[] rotatedHarvestTile;
+    rotatedHarvestTile=nullptr;
 }
 
-void HarvestTiles::orientation(int degrees) {
-    //in this method somehow maintain the integrity of the orientation
+Node* HarvestTiles::orientation(int degrees) {
+    rotatedHarvestTile = new Node[4];
+    
+    switch(degrees){
+        case 90:
+            *(rotatedHarvestTile)=Node(Resource((harvestTile+2)->getResourse()));
+            *(rotatedHarvestTile+1)=Node(Resource((harvestTile)->getResourse()));
+            *(rotatedHarvestTile+2)=Node(Resource((harvestTile+3)->getResourse()));
+            *(rotatedHarvestTile+3)=Node(Resource((harvestTile+1)->getResourse()));
+            break;
+            
+        case 180:
+            *(rotatedHarvestTile)=Node(Resource((harvestTile+2)->getResourse()));
+            *(rotatedHarvestTile+1)=Node(Resource((harvestTile+3)->getResourse()));
+            *(rotatedHarvestTile+2)=Node(Resource((harvestTile)->getResourse()));
+            *(rotatedHarvestTile+3)=Node(Resource((harvestTile+1)->getResourse()));
+            break;
+            
+        case 270:
+            *(rotatedHarvestTile)=Node(Resource((harvestTile)->getResourse()));
+            *(rotatedHarvestTile+1)=Node(Resource((harvestTile+2)->getResourse()));
+            *(rotatedHarvestTile+2)=Node(Resource((harvestTile+1)->getResourse()));
+            *(rotatedHarvestTile+3)=Node(Resource((harvestTile+3)->getResourse()));
+            break;
+    }
+    return rotatedHarvestTile;
 }
-
 
 
 //Node functions
